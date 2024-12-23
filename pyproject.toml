@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pdf-connector"
+name = "pdf_connector"
 version = "0.1.0"
 description = "This connector will generate a PDF documell generate a PDF document, which will be availabe during the use of Service Tasks in Spiffworkflow"
 authors = ["Buhari Abubakar <buharikwmbo@hotmail.com>"]
@@ -16,3 +16,5 @@ xmltodict = "^0.13.0"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
