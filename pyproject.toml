@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "This connector will generate a PDF documell generate a PDF document, which will be availabe during the use of Service Tasks in Spiffworkflow"
 authors = ["Buhari Abubakar <buharikwmbo@hotmail.com>"]
 readme = "README.md"
-packages = [{include = "connector_http", from = "src" }]
+packages = [{include = "connector_pdf", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"
