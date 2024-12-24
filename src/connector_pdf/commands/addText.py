@@ -29,6 +29,7 @@ class AddText(ConnectorCommand, PDFElement):
         c.setFont(self.font, self.size)
         c.drawString(self.x, self.y, self.text)
         error: CommandErrorDict | None = None
+     
 
         return_response: CommandResponseDict = {
             "body": {
