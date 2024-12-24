@@ -11,6 +11,7 @@ python = "^3.11"
 
 spiffworkflow-connector-command = {git = "https://github.com/sartography/spiffworkflow-connector-command.git", rev = "main"}
 xmltodict = "^0.13.0"
+reportlab = "^4.2.5"
 
 
 [build-system]

@@ -6,7 +6,7 @@ from spiffworkflow_connector_command.command_interface import ConnectorCommand
 from spiffworkflow_connector_command.command_interface import ConnectorProxyResponseDict
 
 
-class GenPDF(ConnectorCommand):
+class AddLogo(ConnectorCommand):
     def __init__(self,
         message: str,
     ):
