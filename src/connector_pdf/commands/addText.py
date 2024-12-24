@@ -1,13 +1,15 @@
+from connector_pdf.pdf_elements import PDFElement
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+from reportlab.lib import colors
+
 from typing import Any
 
 from spiffworkflow_connector_command.command_interface import CommandErrorDict
 from spiffworkflow_connector_command.command_interface import CommandResponseDict
 from spiffworkflow_connector_command.command_interface import ConnectorCommand
 from spiffworkflow_connector_command.command_interface import ConnectorProxyResponseDict
-from connector_pdf.pdf_elements import PDFElement
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4
-from reportlab.lib import colors
+
 
 class AddText(ConnectorCommand, PDFElement):
     def __init__(self,
