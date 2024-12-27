@@ -39,23 +39,23 @@ class PDFGenerator(ConnectorCommand):
         self.output_path = output_path
         self.x = x
         self.y = y
-        self.text = text
+        # self.text = text
         self.font = font
         self.size = size
+        # it is working fine without the function add_text
+        self.add_text(text, x, y, font, size)
     #     self.add_text(text, x, y, font, size)
     #     self.pdf = canvas.Canvas(self.output_path, pagesize=A4)
     #     self.components = []
 
-    # def add_text(self, text: str, x: float, y: float, font="Helvetica", size=12):
-    #     """Add text component to the PDF."""
-    #     self.components.append({
-    #         'type': 'text',
-    #         'text': text,
-    #         'x': x,
-    #         'y': y,
-    #         'font': font,
-    #         'size': size
-    #     })
+    def add_text(self, text: str, x: float, y: float, font="Helvetica", size=12):
+        """Add text component to the PDF."""
+        self.text = text
+        self.x = x
+        self.y = y
+        self.font = font
+        self.size = size
+        
 
     def execute(self, _config: Any, _task_data: Any) -> ConnectorProxyResponseDict:
         """Generate and save the PDF."""
