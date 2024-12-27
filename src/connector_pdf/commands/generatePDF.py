@@ -8,34 +8,19 @@ from spiffworkflow_connector_command.command_interface import CommandResponseDic
 from spiffworkflow_connector_command.command_interface import ConnectorCommand
 from spiffworkflow_connector_command.command_interface import ConnectorProxyResponseDict
 
-# class PDFGenerator:
-#     """Class for managing and generating the final PDF."""
-
-#     def __init__(self, output_path: str):
-#         self.output_path = output_path
-#         self.pdf = canvas.Canvas(self.output_path, pagesize=A4)
-#         self.components = []
-
-#         def add_text(self, text: str, x:float, y:float, font="Helvetica", size=12):
-#             self.components.append({
-
-#             })
-        
-#             # self.pdf.setFont(font, size)
-#             # self.pdf.drawString(x, y, text)
-
-
-#     def generate(self):
-#         # pdf = canvas.Canvas(self.output_path, pagesize=A4)
-#         # for component in self.components:
-#         #     component.draw(pdf)
-#         self.pdf.save()
 
 
 class PDFGenerator(ConnectorCommand):
     """Class for managing and generating the final PDF for SpiffWorkflow."""
 
-    def __init__(self, output_path: str, text: str, x: float, y: float, font="Helvetica", size=12):
+    def __init__(self, 
+                 output_path: str, 
+                 text: str, 
+                 x: float, y: float, 
+                 font="Helvetica", 
+                 size=12,
+                 page_size=A4
+                 ):
         self.output_path = output_path
         self.x = x
         self.y = y
@@ -44,9 +29,8 @@ class PDFGenerator(ConnectorCommand):
         self.size = size
         # it is working fine without the function add_text
         self.add_text(text, x, y, font, size)
-    #     self.add_text(text, x, y, font, size)
-    #     self.pdf = canvas.Canvas(self.output_path, pagesize=A4)
-    #     self.components = []
+      
+   
 
     def add_text(self, text: str, x: float, y: float, font="Helvetica", size=12):
         """Add text component to the PDF."""
@@ -56,6 +40,16 @@ class PDFGenerator(ConnectorCommand):
         self.font = font
         self.size = size
         
+    
+
+    # def add_logo(self, logo_path: str, x: float, y: float, width: float, height: float):
+    #     """Add logo component to the PDF."""
+    #     self.logo_path = logo_path
+    #     self.x = x
+    #     self.y = y
+    #     self.width = width
+    #     self.height = height
+
 
     def execute(self, _config: Any, _task_data: Any) -> ConnectorProxyResponseDict:
         """Generate and save the PDF."""
@@ -63,12 +57,14 @@ class PDFGenerator(ConnectorCommand):
         error: CommandErrorDict | None = None
       
         try:
+         
             pdf = canvas.Canvas(self.output_path, pagesize=A4)
             pdf.setFont("Helvetica", 12)
             pdf.drawString(self.x, self.y, self.text)
             pdf.showPage()
             pdf.save()
             logs.append(f"PDF generated successfully at {self.output_path}")
+    
 
             # for component in self.components:
             #     if component['type'] == 'text':
