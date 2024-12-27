@@ -1,8 +1,11 @@
 from connector_pdf.pdf_component import PDFComponent
 from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4, letter, A2, A3, A1, A0, B5, B4, B3, B2, B1, B0, LEGAL, ELEVENSEVENTEEN
+from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
+from reportlab.lib.fonts import helvetica, times, courier
+
 from typing import Any
+
 from spiffworkflow_connector_command.command_interface import CommandErrorDict
 from spiffworkflow_connector_command.command_interface import CommandResponseDict
 from spiffworkflow_connector_command.command_interface import ConnectorCommand
@@ -11,45 +14,76 @@ from spiffworkflow_connector_command.command_interface import ConnectorProxyResp
 
 
 class PDFGenerator(ConnectorCommand):
-    """Class for managing and generating the final PDF for SpiffWorkflow."""
+    """Class for managing and generating the final PDF for SpiffWorkflow.
+    
+    Args:
+    ConnectorCommand (class): The base class for all connector commands.
+    output_path (str): The path where the PDF will be saved.
+    text (str): The text to be added to the PDF.
+    text_x_postion (float): The x position of the text.
+    text_y_position (float): The y position of the text.
+    font (str, optional): The font of the text. Defaults to "Helvetica".
+    size (int, optional): The size of the text. Defaults to 12.
+    page_size (tuple, optional): The size of the page. Defaults
+    to A4.
+
+    """
 
     def __init__(self, 
                  output_path: str, 
                  text: str, 
-                 x: float, y: float, 
+                 text_x_postion: float, 
+                 text_y_position: float, 
+                 x: float,
+                 y: float,
+                 width: float,
+                 height: float,
+                 logo_path: str,
                  font="Helvetica", 
                  size=12,
                  page_size=A4
                  ):
         self.output_path = output_path
-        self.x = x
-        self.y = y
-        # self.text = text
+        self.text_x_postion = text_x_postion
+        self.text_y_position = text_y_position
         self.font = font
         self.size = size
         self.page_size = page_size
-        # it is working fine without the function add_text
-        self.add_text(text, x, y, font, size)
-      
-   
-
-    def add_text(self, text: str, x: float, y: float, font="Helvetica", size=12):
-        """Add text component to the PDF."""
-        self.text = text
+        self.add_text(text, text_x_postion, text_y_position, font, size)
         self.x = x
         self.y = y
+        self.width = width
+        self.height = height
+        self.add_logo(logo_path, x, y, width, height)
+    
+      
+
+
+    def add_text(self, text: str, text_x_postion: float, text_y_position: float, font="Helvetica", size=12):
+        """This function add single line text component to the PDF Generator.
+        Args:
+        text (str): The text to be added to the PDF.
+        x (float): The x position of the text.
+        y (float): The y position of the text.
+        font (str, optional): The font of the text. Defaults to "Helvetica".
+        size (int, optional): The size of the text. Defaults to 12.
+
+        """
+        self.text = text
+        self.text_x_postion = text_x_postion
+        self.text_y_position = text_y_position
         self.font = font
         self.size = size
         
     
 
-    # def add_logo(self, logo_path: str, x: float, y: float, width: float, height: float):
-    #     """Add logo component to the PDF."""
-    #     self.logo_path = logo_path
-    #     self.x = x
-    #     self.y = y
-    #     self.width = width
-    #     self.height = height
+    def add_logo(self, logo_path: str, x: float, y: float, width: float, height: float):
+        """Add logo component to the PDF."""
+        self.logo_path = logo_path
+        self.x = x
+        self.y = y
+        self.width = width
+        self.height = height
 
 
     def execute(self, _config: Any, _task_data: Any) -> ConnectorProxyResponseDict:
@@ -58,27 +92,14 @@ class PDFGenerator(ConnectorCommand):
         error: CommandErrorDict | None = None
       
         try:
-         
             pdf = canvas.Canvas(self.output_path, pagesize=A4)
             pdf.setFont("Helvetica", 12)
             pdf.drawString(self.x, self.y, self.text)
+            pdf.drawImage(self.logo_path, self.x, self.y, width=self.width, height=self.height)
             pdf.showPage()
             pdf.save()
             logs.append(f"PDF generated successfully at {self.output_path}")
     
-
-            # for component in self.components:
-            #     if component['type'] == 'text':
-            #         self.pdf.setFont(component['font'], component['size'])
-            #         self.pdf.drawString(component['x'], component['y'], component['text'])
-            # self.pdf.save()
-            # logs.append(f"PDF generated successfully at {self.output_path}")
-            # for component in self.components:
-            #     if component['type'] == 'text':
-            #         self.pdf.setFont(component['font'], component['size'])
-            #         self.pdf.drawString(component['x'], component['y'], component['text'])
-            # self.pdf.save()
-            # logs.append(f"PDF generated successfully at {self.output_path}")
         except Exception as e:
             logs.append(f"Error generating PDF: {e}")
             error = {
