@@ -39,32 +39,42 @@ class PDFGenerator:
         self.output_path = output_path
         self.x = x
         self.y = y
-        self.add_text(text, x, y, font, size)
-        self.pdf = canvas.Canvas(self.output_path, pagesize=A4)
-        self.components = []
+        self.text = text
+        self.font = font
+        self.size = size
+    #     self.add_text(text, x, y, font, size)
+    #     self.pdf = canvas.Canvas(self.output_path, pagesize=A4)
+    #     self.components = []
 
-    def add_text(self, text: str, x: float, y: float, font="Helvetica", size=12):
-        """Add text component to the PDF."""
-        self.components.append({
-            'type': 'text',
-            'text': text,
-            'x': x,
-            'y': y,
-            'font': font,
-            'size': size
-        })
+    # def add_text(self, text: str, x: float, y: float, font="Helvetica", size=12):
+    #     """Add text component to the PDF."""
+    #     self.components.append({
+    #         'type': 'text',
+    #         'text': text,
+    #         'x': x,
+    #         'y': y,
+    #         'font': font,
+    #         'size': size
+    #     })
 
     def generate(self, _config: Any, _task_data: Any) -> ConnectorProxyResponseDict:
         """Generate and save the PDF."""
         logs = []
         error: CommandErrorDict | None = None
+      
         try:
-            for component in self.components:
-                if component['type'] == 'text':
-                    self.pdf.setFont(component['font'], component['size'])
-                    self.pdf.drawString(component['x'], component['y'], component['text'])
-            self.pdf.save()
+            pdf = canvas.Canvas(self.output_path, pagesize=A4)
+            pdf.setFont("Helvetica", 12)
+            pdf.drawString(self.x, self.y, self.text)
+            pdf.save()
             logs.append(f"PDF generated successfully at {self.output_path}")
+
+            # for component in self.components:
+            #     if component['type'] == 'text':
+            #         self.pdf.setFont(component['font'], component['size'])
+            #         self.pdf.drawString(component['x'], component['y'], component['text'])
+            # self.pdf.save()
+            # logs.append(f"PDF generated successfully at {self.output_path}")
             # for component in self.components:
             #     if component['type'] == 'text':
             #         self.pdf.setFont(component['font'], component['size'])
