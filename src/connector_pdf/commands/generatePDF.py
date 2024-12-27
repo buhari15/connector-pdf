@@ -1,6 +1,6 @@
 from connector_pdf.pdf_component import PDFComponent
 from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4
+from reportlab.lib.pagesizes import A4, letter, A2, A3, A1, A0, B5, B4, B3, B2, B1, B0, LEGAL, ELEVENSEVENTEEN
 from reportlab.lib import colors
 from typing import Any
 from spiffworkflow_connector_command.command_interface import CommandErrorDict
