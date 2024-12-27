@@ -12,6 +12,7 @@ python = "^3.11"
 spiffworkflow-connector-command = {git = "https://github.com/sartography/spiffworkflow-connector-command.git", rev = "main"}
 xmltodict = "^0.13.0"
 reportlab = "^4.2.5"
+pillow = "^11.0.0"
 
 
 [tool.poetry.group.dev.dependencies]

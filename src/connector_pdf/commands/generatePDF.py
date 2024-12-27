@@ -10,7 +10,9 @@ from spiffworkflow_connector_command.command_interface import CommandResponseDic
 from spiffworkflow_connector_command.command_interface import ConnectorCommand
 from spiffworkflow_connector_command.command_interface import ConnectorProxyResponseDict
 
-
+import requests
+from PIL import Image
+from io import BytesIO
 
 class PDFGenerator(ConnectorCommand):
     """Class for managing and generating the final PDF for SpiffWorkflow.
@@ -53,7 +55,8 @@ class PDFGenerator(ConnectorCommand):
         self.y = y
         self.width = width
         self.height = height
-        self.add_logo(logo_path, x, y, width, height)
+        self.logo_path = logo_path
+        # self.add_logo(logo_path, x, y, width, height)
     
       
 
@@ -93,8 +96,14 @@ class PDFGenerator(ConnectorCommand):
         try:
             pdf = canvas.Canvas(self.output_path, pagesize=A4)
             pdf.setFont("Helvetica", 12)
-            pdf.drawString(self.x, self.y, self.text)
-            pdf.drawImage(self.logo_path, self.x, self.y, width=self.width, height=self.height)
+            pdf.drawString(self.text_x_postion, self.text_x_postion, self.text)
+            if self.logo_path.startswith("http") or self.logo_path.startswith("https"):
+                response = requests.get(self.logo_path)
+                image = Image.open(BytesIO(response.content))
+                pdf.drawImage(image, self.x, self.y, width=self.width, height=self.height)
+            else:
+                pdf.drawImage(self.logo_path, self.x, self.y, width=self.width, height=self.height)
+            
             pdf.showPage()
             pdf.save()
             logs.append(f"PDF generated successfully at {self.output_path}")
