@@ -13,6 +13,7 @@ from spiffworkflow_connector_command.command_interface import ConnectorProxyResp
 import requests
 from PIL import Image
 from io import BytesIO
+import os
 
 class PDFGenerator(ConnectorCommand):
     """Class for managing and generating the final PDF for SpiffWorkflow.
@@ -94,9 +95,12 @@ class PDFGenerator(ConnectorCommand):
         error: CommandErrorDict | None = None
       
         try:
+            os.makedirs(os.path.dirname(self.output_path), exist_ok=True)
+            logs.append(f"PDF generated successfully at {self.output_path}")
             pdf = canvas.Canvas(self.output_path, pagesize=A4)
             pdf.setFont("Helvetica", 12)
             pdf.drawString(self.text_x_postion, self.text_x_postion, self.text)
+
             if self.logo_path.startswith("http") or self.logo_path.startswith("https"):
                 response = requests.get(self.logo_path)
                 image = Image.open(BytesIO(response.content))
