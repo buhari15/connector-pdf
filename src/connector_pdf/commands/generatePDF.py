@@ -50,7 +50,7 @@ class PDFGenerator:
             'size': size
         })
 
-    def generate(self, _config: Any, _task_data: Any) -> ConnectorProxyResponseDict:
+    def generate(self, _config: any, _task_data: any) -> ConnectorProxyResponseDict:
         """Generate and save the PDF."""
         logs = []
         error: CommandErrorDict | None = None
