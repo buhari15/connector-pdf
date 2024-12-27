@@ -2,7 +2,6 @@ from connector_pdf.pdf_component import PDFComponent
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.lib import colors
-from reportlab.lib.fonts import helvetica, times, courier
 
 from typing import Any
 
