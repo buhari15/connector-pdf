@@ -101,12 +101,12 @@ class PDFGenerator(ConnectorCommand):
             pdf.setFont("Helvetica", 12)
             pdf.drawString(self.text_x_postion, self.text_x_postion, self.text)
 
-            if self.logo_path.startswith("http") or self.logo_path.startswith("https"):
-                response = requests.get(self.logo_path)
-                image = Image.open(BytesIO(response.content))
-                pdf.drawImage(image, self.x, self.y, width=self.width, height=self.height)
-            else:
-                pdf.drawImage(self.logo_path, self.x, self.y, width=self.width, height=self.height)
+            # if self.logo_path.startswith("http") or self.logo_path.startswith("https"):
+            #     response = requests.get(self.logo_path)
+            #     image = BytesIO(response.content)
+            #     pdf.drawImage(image, self.x, self.y, width=self.width, height=self.height)
+            # else:
+            #     pdf.drawImage(self.logo_path, self.x, self.y, width=self.width, height=self.height)
             
             pdf.showPage()
             pdf.save()
