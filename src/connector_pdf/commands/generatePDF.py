@@ -32,7 +32,7 @@ from spiffworkflow_connector_command.command_interface import ConnectorProxyResp
 #         self.pdf.save()
 
 
-class PDFGenerator:
+class PDFGenerator(ConnectorCommand):
     """Class for managing and generating the final PDF for SpiffWorkflow."""
 
     def __init__(self, output_path: str, text: str, x: float, y: float, font="Helvetica", size=12):
@@ -57,7 +57,7 @@ class PDFGenerator:
     #         'size': size
     #     })
 
-    def generate(self, _config: Any, _task_data: Any) -> ConnectorProxyResponseDict:
+    def execute(self, _config: Any, _task_data: Any) -> ConnectorProxyResponseDict:
         """Generate and save the PDF."""
         logs = []
         error: CommandErrorDict | None = None
@@ -66,6 +66,7 @@ class PDFGenerator:
             pdf = canvas.Canvas(self.output_path, pagesize=A4)
             pdf.setFont("Helvetica", 12)
             pdf.drawString(self.x, self.y, self.text)
+            pdf.showPage()
             pdf.save()
             logs.append(f"PDF generated successfully at {self.output_path}")
 
