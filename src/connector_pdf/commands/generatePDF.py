@@ -27,6 +27,7 @@ class PDFGenerator(ConnectorCommand):
         # self.text = text
         self.font = font
         self.size = size
+        self.page_size = page_size
         # it is working fine without the function add_text
         self.add_text(text, x, y, font, size)
       
