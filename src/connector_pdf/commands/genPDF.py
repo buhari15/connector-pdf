@@ -47,14 +47,14 @@ class GenPDF(ConnectorCommand):
             story.append(Spacer(1, 12))
 
             # Add logo if provided
-            if self.logo_path:
-                if self.logo_path.startswith('http://') or self.logo_path.startswith('https://'):
-                    response = requests.get(self.logo_path)
-                    image = BytesIO(response.content)
-                    img = Image(image, width=self.width, height=self.height)
-                else:
-                    img = Image(self.logo_path, width=self.width, height=self.height)
-                story.append(img)
+            # if self.logo_path:
+            #     if self.logo_path.startswith('http://') or self.logo_path.startswith('https://'):
+            #         response = requests.get(self.logo_path)
+            #         image = BytesIO(response.content)
+            #         img = Image(image, width=self.width, height=self.height)
+            #     else:
+            #         img = Image(self.logo_path, width=self.width, height=self.height)
+            #     story.append(img)
 
             doc.build(story)
             logs.append(f"PDF generated successfully at {self.output_path}")
