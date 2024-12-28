@@ -100,6 +100,7 @@ class PDFGenerator(ConnectorCommand):
             pdf = canvas.Canvas(self.output_path, pagesize=A4)
             pdf.setFont("Helvetica", 12)
             pdf.drawString(self.text_x_postion, self.text_x_postion, self.text)
+            
 
             # if self.logo_path.startswith("http") or self.logo_path.startswith("https"):
             #     response = requests.get(self.logo_path)
