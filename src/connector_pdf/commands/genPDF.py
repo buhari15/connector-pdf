@@ -19,14 +19,18 @@ class GenPDF(ConnectorCommand):
     def __init__(self, 
                  output_path: str,
                  text: str,
+                 width: float, height: float,
                  logo_path: str = None, 
                  font_size=12, page_size=A4,
+                
         ):
         self.output_path = output_path
         self.text = text
         self.font_size = font_size
         self.page_size = page_size
         self.logo_path = logo_path
+        self.width = width
+        self.height = height
 
     def execute(self, _config: Any, _task_data: Any) -> ConnectorProxyResponseDict:
         """Generate and save the PDF."""
